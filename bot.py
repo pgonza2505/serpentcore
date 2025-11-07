@@ -1,8 +1,8 @@
 import disnake
+import os
 from disnake.ext import commands
 from disnake.ext.commands import Cog
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -18,7 +18,7 @@ bot = commands.InteractionBot(intents=intents, command_sync_flags=sync_flags)
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user} (id={bot.user.id})")
-    await bot.change_presence(activity=disnake.Game("Attention: This is not a drill."))
+    await bot.change_presence(activity=disnake.Game("currently debugging, please wait..."))
 
 @bot.slash_command(description="Check bot latency.")
 async def ping(inter: disnake.ApplicationCommandInteraction):
@@ -48,6 +48,5 @@ for ext in initial_extensions:
         print(f"Loaded extension: {ext}")
     except Exception as e:
         print(f"Failed to load {ext}: {e}")
-
 
 bot.run(TOKEN)

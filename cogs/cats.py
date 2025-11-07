@@ -137,6 +137,18 @@ class Cats(commands.Cog):
         embed.set_footer(text=f"r/{sub} • by u/{author} • {score} upvotes")
 
         await inter.edit_original_response(embed=embed)
+    
+    @commands.slash_command(description="admin: remove global /cat", guild_ids=[1435392580002119683])
+    @commands.default_member_permissions(administrator=True)
+    async def cat_cleanup_global(inter: disnake.ApplicationCommandInteraction):
+        app_id = inter.bot.application_id
+        cmds = await inter.bot.http.get_global_application_commands(app_id)
+        deleted = 0
+        for cmd in cmds:
+            if cmd.get("name") == "cat":
+                await inter.bot.http.delete_global_application_command(app_id, cmd["id"])
+                deleted += 1
+        await inter.response.send_message(f"Deleted {deleted} global /cat command(s).")
 
 
 def setup(bot):

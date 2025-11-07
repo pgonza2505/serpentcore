@@ -5,22 +5,37 @@ A small Discord bot using [disnake] with slash commands, context menus, and a ha
 ## Features
 ### 🎮 Core Commands
 `/ping` — check bot latency
+
 `/echo` — echo back your message
+
 `/pfp` — show a user's profile picture (supports server avatars & custom sizes)
+
 `Greet` (user context menu) — greet any user directly from the context menu
+
 ### 🐾 Fun & Entertainment
 `/cat` — random cat image from Reddit with CATAAS fallback
+
 `/dog` — random dog image from Random.Dog
+
 `/meme` — fetch a meme from subreddits like r/memes, r/dankmemes, or r/wholesomememes
+
 `/quote` — get an inspirational, humorous, or famous quote
+
 `/eightball` — ask the magic 8-ball a question (rare chance of a rude response)
+
 `/roll` — roll customizable dice (e.g. 3d6 + 2)
+
 ### 🧰 Utility & Quality-of-Life
 `/userinfo` — view information about a user (roles, join date, account age)
+
 `/serverinfo` — view server statistics and creation info
+
 `/remindme` — set a reminder with custom delay and optional DM delivery
+
 `/poll` — create a quick reaction-based poll with up to 5 options
+
 `/stats` — check bot stats, uptime, and latency
+
 `/define` — look up English word definitions
 
 ## Setup

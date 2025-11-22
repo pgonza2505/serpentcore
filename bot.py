@@ -34,4 +34,11 @@ for ext in initial_extensions:
     except Exception as e:
         print(f"Failed to load {ext}: {e}")
 
-bot.run(TOKEN)
+from utils.autoupdate import auto_update
+
+def main():
+    auto_update()
+    bot.run(TOKEN)
+
+if __name__ == "__main__":
+    main()

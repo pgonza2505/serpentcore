@@ -16,7 +16,7 @@ If you discover a security issue, please **do not open a public GitHub issue**.
 
 Instead, contact me directly at:
 
-**your_email_here@example.com**  
+**andy.gonzalez0205@gmail.com**  
 (or GitHub private security advisories)
 
 I will review and respond as soon as possible.

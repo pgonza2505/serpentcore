@@ -87,6 +87,6 @@ DISCORD_TOKEN=your_token_here
 python bot.py
 ```
 ## Development Tips
-Add `guild_ids=[YOUR_ID]` to slash commands for instant sync during testing
-Hit `Ctrl+R` in Discord for a hard UI reload if commands don’t appear
-New cogs can be dropped into `/cogs/` and added to `initial_extensions`
+- Add `guild_ids=[YOUR_ID]` to slash commands for instant sync during testing
+- Hit `Ctrl+R` in Discord for a hard UI reload if commands don’t appear
+- New cogs can be dropped into `/cogs/` and added to `initial_extensions`

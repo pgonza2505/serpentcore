@@ -25,6 +25,7 @@ initial_extensions = [
     "cogs.fun",
     "cogs.util",
     "cogs.context",
+    "cogs.moderation",
 ]
 
 for ext in initial_extensions:

@@ -48,6 +48,30 @@ Grouped under the `/util` command namespace for server info, reminders, and prod
 
 `/util define` — fetch English word definitions via dictionaryapi.dev
 
+### Moderation Commands (`/moderation ...`)
+
+Grouped under the `/moderation` command namespace for user management, mod logging, and viewing mod actions.
+
+`/moderation purge` — deletes a set amount of messages in a channel
+
+`/moderation slowmode` — sets the channel's slowmode
+
+`/moderation say` — send a message as the bot
+
+`/moderation kick` — kicks a user out of the server with an optional reason
+
+`/moderation ban` — bans a user from the server with an optional reason and deleting up to seven days of messages
+
+`/moderation warn` — warns a user with an optional reason and whether to DM the user or not
+
+`/moderation warnings` — view all warnings for a user
+
+`/moderation clearwarnings` — clears all warnings from a user
+
+`/moderation timeout` — places a timeout on a user with a duration
+
+`/moderation untimeout` — removes a timeout on a user with a timeout
+
 ## Modular Structure
 ```bash
 disnake-bot/
@@ -55,6 +79,7 @@ disnake-bot/
 ├─ cogs/
 │  ├─ fun.py        # /fun commands
 │  ├─ util.py       # /util commands
+│  ├─ moderation.py # /moderation commands
 │  └─ context.py    # context menu commands (e.g., Greet)
 └─ utils/
    ├─ autoupdate.py # Autoupdate helper

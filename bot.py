@@ -30,7 +30,6 @@ initial_extensions = [
     "cogs.context",
     "cogs.moderation",
     "cogs.info",
-    "cogs.spicy",
 ]
 
 for ext in initial_extensions:

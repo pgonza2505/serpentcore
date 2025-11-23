@@ -1,8 +1,19 @@
 import random
 from .http import _get_json
 
-UA = "disnake-bot/1.0 (by u/your_username_or_bot_name)"
-REDDIT_BASE = "https://www.reddit.com"
+UA_WINDOWS = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0.0.0 Safari/537.36"
+)
+
+UA_LINUX = (
+    "Mozilla/5.0 (X11; Linux armv8l) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0.0.0 Safari/537.36"
+)
+
+BASE_URL = "https://www.reddit.com"
 
 def _image_from_post(post: dict, allow_nsfw: bool) -> str | None:
     data = post.get("data", {}) or {}
@@ -26,27 +37,54 @@ def _image_from_post(post: dict, allow_nsfw: bool) -> str | None:
         return None
     return None
 
-async def fetch_random_reddit_image(subreddit: str, *, sort: str = "hot", t: str = "day", allow_nsfw: bool = False):
-    params = "?limit=50"
-    if sort == "top":
-        params += f"&t={t}"
-    url = f"{REDDIT_BASE}/r/{subreddit}/{sort}.json{params}"
-    payload = await _get_json(url, headers={"User-Agent": UA})
-    if not payload:
+async def fetch_random_reddit_image(
+    subreddit: str,
+    *,
+    sort: str = "hot",
+    t: str = "day",
+    limit: int = 50,
+    allow_nsfw: bool = False,
+):
+    url = f"{BASE_URL}/r/{subreddit}/{sort}.json?limit={limit}&t={t}"
+
+    # Try Windows UA first
+    payload = await _get_json(
+        url,
+        headers={"User-Agent": UA_WINDOWS},
+    )
+
+    # If FAILS → try Linux/Pi UA
+    if payload is None:
+        print("[reddit] Windows UA failed, retrying with Linux UA...")
+        payload = await _get_json(
+            url,
+            headers={"User-Agent": UA_LINUX},
+        )
+
+    # If STILL fails → give up
+    if payload is None:
+        print("[reddit] Both UAs failed. Giving up.")
         return None
 
-    posts = (payload.get("data", {}) or {}).get("children", []) or []
-    random.shuffle(posts)
-    for p in posts:
-        img = _image_from_post(p, allow_nsfw)
-        if img:
-            d = p["data"]
-            meta = {
-                "title": d.get("title", "Untitled"),
-                "permalink": f"{REDDIT_BASE}{d.get('permalink','')}",
-                "author": d.get("author", "[deleted]"),
-                "score": d.get("score", 0),
-                "subreddit": d.get("subreddit", subreddit),
-            }
-            return img, meta
-    return None
+    # Same parsing logic as before below
+    posts = payload.get("data", {}).get("children", [])
+    if not posts:
+        return None
+
+    candidates = []
+    for post in posts:
+        pdata = post.get("data", {})
+        img = pdata.get("url_overridden_by_dest") or pdata.get("url")
+        if not img:
+            continue
+
+        if not allow_nsfw and pdata.get("over_18"):
+            continue
+
+        if img.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
+            candidates.append(img)
+
+    if not candidates:
+        return None
+
+    return random.choice(candidates)

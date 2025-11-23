@@ -2,3 +2,4 @@ __pycache__/
 .env
 config.json
 disnake-bot.code-workspace
+data/
